@@ -1,0 +1,12 @@
+# Test Cases: ApexBank Mobile & E-Wallet Application (v1.0)
+**Standard:** Compliant with IEEE 829 Standard
+**Author:** Adham Essam (QA Engineer)
+
+| Test Case ID | Module | Test Scenario / Description | Pre-conditions | Test Steps | Expected Result | Actual Result | Status | Severity |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **TC-AUTH-001** | Login | Validate Biometric Login activation and successful entry. | App installed; Valid credentials saved in keychain. | 1. Open App.<br>2. Tap Fingerprint/FaceID prompt.<br>3. Authenticate with valid biometric. | App authenticates successfully and redirects user to Dashboard. | As Expected | **PASS** | Major |
+| **TC-AUTH-002** | Security | Validate Session Timeout functionality after inactivity period. | User is logged in and active on Dashboard. | 1. Leave the app idle for 3 minutes (Configured limit).<br>2. Try to tap "Transfer". | App must automatically lock, clear active JWT token, and show "Session Expired" screen. | As Expected | **PASS** | Critical |
+| **TC-TXN-001** | E-Wallet | Validate P2P wallet transfer with sufficient balance. | Sender balance: 5000 EGP.<br>Receiver Wallet Active. | 1. Go to Transfer -> Wallet.<br>2. Enter Receiver ID.<br>3. Enter Amount: 1000 EGP.<br>4. Tap Confirm. | 1. Success message appears.<br>2. Sender balance drops to 4000 EGP.<br>3. Transaction log created in DB. | As Expected | **PASS** | Critical |
+| **TC-TXN-002** | E-Wallet | **[Negative]** Validate P2P transfer exceeding available balance. | Sender balance: 200 EGP. | 1. Go to Transfer.<br>2. Enter Amount: 500 EGP.<br>3. Tap Confirm. | System blocks transaction, displays "Insufficient Funds" alert. No money deducted. | Money deducted! Balance became -300 EGP. | **FAIL** | **Blocker** |
+| **TC-INT-001** | Interrupt | Validate system behavior when an incoming voice call interrupts a processing transaction. | User on Transfer Confirmation Screen. | 1. Tap "Confirm Transfer".<br>2. Trigger an incoming mobile phone call immediately.<br>3. Decline the call and return to the app. | App resumes cleanly. Transaction either fully processed or safely rolled back. No double deduction. | As Expected | **PASS** | Critical |
+| **TC-INT-002** | Interrupt | Validate application stability during Low Battery Warning pop-up. | Device battery at 21%. | 1. Navigate to Wallet History.<br>2. Force device battery to drop to 20% to trigger OS Low Battery alert. | App does not crash. State is preserved behind the OS system pop-up. | App crashed instantly upon pop-up | **FAIL** | Major |
