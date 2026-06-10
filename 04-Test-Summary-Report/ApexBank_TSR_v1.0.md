@@ -1,5 +1,5 @@
 # Test Summary Report (TSR): ApexBank Mobile (v1.0)
-**Date:** June 10, 2026
+**Date:** may 10, 2026
 
 ## 1. Executive Summary
 The test execution phase for ApexBank Mobile v2.4.0 completed successfully. A total of 45 test cases were executed across 10+ Android/iOS matrix configurations. 2 critical defects were found and logged.
